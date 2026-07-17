@@ -70,10 +70,4 @@ dependencies {
     implementation(libs.androidx.splash.screen)
 
     implementation(libs.vinchamp77.buildutils)
-
-    // Room Database
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-
-    ksp(libs.androidx.room.compiler)
 }
