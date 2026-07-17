@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "vtsen.hashnode.dev.newemptycomposeapp"
+    namespace = "ir.psyforms.app"
     compileSdk = 36
 
     defaultConfig {
