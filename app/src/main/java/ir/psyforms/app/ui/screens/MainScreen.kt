@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package vtsen.hashnode.dev.newemptycomposeapp.ui.screens
+package ir.psyforms.app.ui.screens
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import vtsen.hashnode.dev.newemptycomposeapp.R
-import vtsen.hashnode.dev.newemptycomposeapp.ui.theme.NewEmptyComposeAppTheme
+import ir.psyforms.app.R
+import ir.psyforms.app.ui.theme.NewEmptyComposeAppTheme
 
 @Composable
 fun MainScreen() {
