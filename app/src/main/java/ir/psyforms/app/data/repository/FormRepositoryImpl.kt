@@ -10,8 +10,26 @@ class FormRepositoryImpl : FormRepository {
             Form(
                 id = 1,
                 title = "نمونه فرم",
-                description = "اولین فرم برنامه"
+                description = "اولین فرم برنامه",
+                createdAt = System.currentTimeMillis(),
+                updatedAt = System.currentTimeMillis()
             )
         )
+    }
+
+    override suspend fun getForm(id: Long): Form? {
+        return getForms().find { it.id == id }
+    }
+
+    override suspend fun insert(form: Form): Long {
+        return form.id
+    }
+
+    override suspend fun update(form: Form) {
+        // فعلاً پیاده‌سازی آزمایشی
+    }
+
+    override suspend fun delete(form: Form) {
+        // فعلاً پیاده‌سازی آزمایشی
     }
 }
