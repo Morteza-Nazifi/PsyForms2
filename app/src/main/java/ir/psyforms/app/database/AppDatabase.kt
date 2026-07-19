@@ -2,6 +2,7 @@ package ir.psyforms.app.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import ir.psyforms.app.database.dao.DomainDao
 import ir.psyforms.app.database.entity.AnswerEntity
 import ir.psyforms.app.database.entity.AssessmentSessionEntity
 import ir.psyforms.app.database.entity.DomainEntity
@@ -33,4 +34,7 @@ import ir.psyforms.app.database.entity.TextAnswerEntity
     version = 1,
     exportSchema = true
 )
-abstract class AppDatabase : RoomDatabase()
+abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun domainDao(): DomainDao
+}
