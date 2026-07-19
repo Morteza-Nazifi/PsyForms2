@@ -784,6 +784,269 @@ Demographic
 
 اطلاعات جمعیت‌شناختی فقط یک بار در هر Session ذخیره می‌شوند و برای تمام پرسشنامه‌های همان Session استفاده خواهند شد.
 
+--پایان بخش سوم
+
+# 19. ResponseEntity
+
+این موجودیت پاسخ تمام سؤال‌های کاربران را نگهداری می‌کند.
+
+برای هر پاسخ دقیقاً یک رکورد ایجاد می‌شود.
+
 ---
 
-# پایان بخش سوم
+## جدول
+
+| ستون | نوع | توضیح |
+|------|------|-------|
+| id | Long | کلید اصلی |
+| sessionId | Long | شناسه Session |
+| questionnaireId | Long | شناسه پرسشنامه |
+| subscaleId | Long | شناسه خرده‌مقیاس |
+| questionId | Long | شناسه سؤال |
+| textAnswer | String? | پاسخ متنی |
+| numericAnswer | Double? | پاسخ عددی |
+| optionIndex | Int? | گزینه انتخاب شده |
+| optionScore | Double? | امتیاز گزینه |
+
+---
+
+## قواعد
+
+### سؤال متنی
+
+```
+textAnswer != null
+```
+
+سایر فیلدهای پاسخ تهی هستند.
+
+---
+
+### سؤال عددی
+
+```
+numericAnswer != null
+```
+
+---
+
+### سؤال چندگزینه‌ای
+
+```
+optionIndex != null
+
+optionScore != null
+```
+
+---
+
+## ارتباط‌ها
+
+```
+Session
+
+1
+
+↓
+
+∞
+
+Response
+```
+
+```
+Question
+
+1
+
+↓
+
+∞
+
+Response
+```
+
+---
+
+# 20. ScoreEntity
+
+این موجودیت نتیجه نمره‌گذاری را ذخیره می‌کند.
+
+هدف آن جلوگیری از محاسبه مجدد در هر بار نمایش نتایج است.
+
+---
+
+## جدول
+
+| ستون | نوع | توضیح |
+|------|------|-------|
+| id | Long | کلید اصلی |
+| sessionId | Long | شناسه Session |
+| questionnaireId | Long | شناسه پرسشنامه |
+| subscaleId | Long? | شناسه خرده‌مقیاس |
+| score | Double | نمره |
+
+---
+
+## قواعد
+
+اگر:
+
+```
+subscaleId != null
+```
+
+رکورد مربوط به نمره همان خرده‌مقیاس است.
+
+اگر:
+
+```
+subscaleId == null
+```
+
+رکورد مربوط به نمره کل پرسشنامه است.
+
+---
+
+## ارتباط‌ها
+
+```
+Session
+
+1
+
+↓
+
+∞
+
+Score
+```
+
+---
+
+# 21. Foreign Keys
+
+تمام روابط با Foreign Key پیاده‌سازی می‌شوند.
+
+| جدول | کلید خارجی |
+|-------|------------|
+| Questionnaire | domainId |
+| Subscale | questionnaireId |
+| Question | subscaleId |
+| Question | optionTemplateId |
+| OptionTemplateItem | templateId |
+| ScoringRule | subscaleId |
+| ScoringRule | questionId |
+| Response | sessionId |
+| Response | questionnaireId |
+| Response | subscaleId |
+| Response | questionId |
+| Score | sessionId |
+| Score | questionnaireId |
+| Score | subscaleId |
+
+---
+
+# 22. Cascade Rules
+
+برای جلوگیری از باقی ماندن داده‌های یتیم (Orphan Records)، حذف موجودیت‌های ساختاری به صورت Cascade انجام می‌شود.
+
+```
+Domain
+
+↓
+
+Questionnaire
+
+↓
+
+Subscale
+
+↓
+
+Question
+
+↓
+
+ScoringRule
+```
+
+در داده‌های کاربران هیچ حذف Cascade خودکار انجام نخواهد شد تا از حذف ناخواسته اطلاعات پژوهشی جلوگیری شود.
+
+---
+
+# 23. Indexها
+
+برای افزایش سرعت جستجو، Index روی ستون‌های زیر ایجاد می‌شود:
+
+- domainId
+- questionnaireId
+- subscaleId
+- questionId
+- templateId
+- sessionId
+- displayOrder
+
+---
+
+# 24. Migration Strategy
+
+نسخه اول برنامه دارای:
+
+```
+Database Version = 1
+```
+
+است.
+
+در نسخه‌های آینده، هر تغییر ساختار پایگاه داده فقط از طریق Migration رسمی انجام خواهد شد.
+
+حذف و ایجاد مجدد پایگاه داده در نسخه‌های منتشرشده مجاز نیست.
+
+---
+
+# 25. Design Decisions
+
+دلایل اصلی طراحی فعلی عبارت‌اند از:
+
+- جداسازی کامل داده‌های ساختاری از داده‌های کاربران.
+- امکان به‌روزرسانی Repository بدون حذف پاسخ‌های کاربران.
+- قابلیت استفاده مجدد از قالب‌های گزینه‌ای.
+- ذخیره نمرات محاسبه‌شده برای افزایش سرعت نمایش نتایج.
+- پشتیبانی کامل از عملکرد آفلاین.
+- آمادگی برای توسعه قابلیت‌های آینده بدون تغییر اساسی در ساختار داده‌ها.
+
+---
+
+# جمع‌بندی
+
+پایگاه داده PsyForms شامل دو بخش مستقل است:
+
+## Repository Data
+
+- Domain
+- Questionnaire
+- Subscale
+- Question
+- OptionTemplate
+- OptionTemplateItem
+- ScoringRule
+
+## User Data
+
+- Session
+- Demographic
+- Response
+- Score
+
+این معماری تضمین می‌کند که انتشار یا به‌روزرسانی ساختار پرسشنامه‌ها هیچ تأثیری بر اطلاعات پژوهشی کاربران نداشته باشد و امکان همگام‌سازی Repository با GitHub بدون از دست رفتن داده‌های محلی فراهم باشد.
+
+---
+
+# پایان سند
+
+**Database Design**
+
+**Version:** 1.0
+
+**Status:** --پایان
