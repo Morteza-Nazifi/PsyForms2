@@ -7,6 +7,7 @@ import ir.psyforms.app.database.dao.OptionItemDao
 import ir.psyforms.app.database.dao.OptionTemplateDao
 import ir.psyforms.app.database.dao.QuestionDao
 import ir.psyforms.app.database.dao.QuestionnaireDao
+import ir.psyforms.app.database.dao.ScoringRuleDao
 import ir.psyforms.app.database.dao.SubscaleDao
 import ir.psyforms.app.database.entity.AnswerEntity
 import ir.psyforms.app.database.entity.AssessmentSessionEntity
@@ -18,6 +19,7 @@ import ir.psyforms.app.database.entity.OptionTemplateEntity
 import ir.psyforms.app.database.entity.QuestionEntity
 import ir.psyforms.app.database.entity.QuestionnaireEntity
 import ir.psyforms.app.database.entity.QuestionnaireSessionEntity
+import ir.psyforms.app.database.entity.ScoringRuleEntity
 import ir.psyforms.app.database.entity.SubscaleEntity
 import ir.psyforms.app.database.entity.TextAnswerEntity
 
@@ -29,6 +31,7 @@ import ir.psyforms.app.database.entity.TextAnswerEntity
         QuestionEntity::class,
         OptionTemplateEntity::class,
         OptionItemEntity::class,
+        ScoringRuleEntity::class,
         AssessmentSessionEntity::class,
         QuestionnaireSessionEntity::class,
         AnswerEntity::class,
@@ -52,4 +55,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun optionTemplateDao(): OptionTemplateDao
 
     abstract fun optionItemDao(): OptionItemDao
+
+    abstract fun scoringRuleDao(): ScoringRuleDao
 }
