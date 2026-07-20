@@ -3,6 +3,7 @@ package ir.psyforms.app.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import ir.psyforms.app.database.dao.DomainDao
+import ir.psyforms.app.database.dao.QuestionDao
 import ir.psyforms.app.database.dao.QuestionnaireDao
 import ir.psyforms.app.database.dao.SubscaleDao
 import ir.psyforms.app.database.entity.AnswerEntity
@@ -43,4 +44,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun questionnaireDao(): QuestionnaireDao
 
     abstract fun subscaleDao(): SubscaleDao
+
+    abstract fun questionDao(): QuestionDao
 }
