@@ -8,6 +8,7 @@ import ir.psyforms.app.database.dao.OptionItemDao
 import ir.psyforms.app.database.dao.OptionTemplateDao
 import ir.psyforms.app.database.dao.QuestionDao
 import ir.psyforms.app.database.dao.QuestionnaireDao
+import ir.psyforms.app.database.dao.ResponseDao
 import ir.psyforms.app.database.dao.ScoringRuleDao
 import ir.psyforms.app.database.dao.SessionDao
 import ir.psyforms.app.database.dao.SubscaleDao
@@ -22,6 +23,7 @@ import ir.psyforms.app.database.entity.OptionTemplateEntity
 import ir.psyforms.app.database.entity.QuestionEntity
 import ir.psyforms.app.database.entity.QuestionnaireEntity
 import ir.psyforms.app.database.entity.QuestionnaireSessionEntity
+import ir.psyforms.app.database.entity.ResponseEntity
 import ir.psyforms.app.database.entity.ScoringRuleEntity
 import ir.psyforms.app.database.entity.SessionEntity
 import ir.psyforms.app.database.entity.SubscaleEntity
@@ -40,6 +42,7 @@ import ir.psyforms.app.database.entity.TextAnswerEntity
         // User Data (New Architecture)
         SessionEntity::class,
         DemographicEntity::class,
+        ResponseEntity::class,
 
         // Temporary legacy entities (to be removed later)
         AssessmentSessionEntity::class,
@@ -71,4 +74,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
 
     abstract fun demographicDao(): DemographicDao
+
+    abstract fun responseDao(): ResponseDao
 }
