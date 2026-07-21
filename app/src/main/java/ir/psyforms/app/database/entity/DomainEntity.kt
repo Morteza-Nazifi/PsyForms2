@@ -1,9 +1,15 @@
 package ir.psyforms.app.database.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "domains")
+@Entity(
+    tableName = "domains",
+    indices = [
+        Index(value = ["displayOrder"], unique = true)
+    ]
+)
 data class DomainEntity(
 
     @PrimaryKey(autoGenerate = true)
