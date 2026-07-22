@@ -3,7 +3,6 @@ package ir.psyforms.app.database.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ir.psyforms.app.database.entity.SubscaleEntity
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SubscaleDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insert(subscale: SubscaleEntity): Long
 
     @Update
@@ -23,14 +22,27 @@ interface SubscaleDao {
 
     @Query(
         """
-        SELECT *
-        FROM subscales
+        SELECT * FROM subscales
+        ORDER BY questionnaireId, displayOrder
+        """
+    )
+    fun getAll(): Flow<List<SubscaleEntity>>
+
+    @Query(
+        """
+        SELECT * FROM subscales
         WHERE questionnaireId = :questionnaireId
         ORDER BY displayOrder
         """
     )
     fun getByQuestionnaire(questionnaireId: Long): Flow<List<SubscaleEntity>>
 
-    @Query("SELECT * FROM subscales WHERE id = :id")
+    @Query(
+        """
+        SELECT * FROM subscales
+        WHERE id = :id
+        LIMIT 1
+        """
+    )
     suspend fun getById(id: Long): SubscaleEntity?
 }
