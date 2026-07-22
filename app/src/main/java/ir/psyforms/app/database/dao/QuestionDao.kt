@@ -28,9 +28,7 @@ interface QuestionDao {
         ORDER BY displayOrder
         """
     )
-    fun getQuestionsBySubscale(
-        subscaleId: Long
-    ): Flow<List<QuestionEntity>>
+    fun getBySubscale(subscaleId: Long): Flow<List<QuestionEntity>>
 
     @Query(
         """
@@ -40,7 +38,14 @@ interface QuestionDao {
         LIMIT 1
         """
     )
-    suspend fun getById(
-        id: Long
-    ): QuestionEntity?
+    suspend fun getById(id: Long): QuestionEntity?
+
+    @Query(
+        """
+        SELECT *
+        FROM questions
+        ORDER BY displayOrder
+        """
+    )
+    fun getAll(): Flow<List<QuestionEntity>>
 }
