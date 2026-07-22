@@ -7,5 +7,7 @@ import androidx.room.PrimaryKey
 data class OptionTemplateEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0
+    val id: Long = 0,
+
+    val optionCount: Int
 )
