@@ -45,11 +45,7 @@ data class ScoreEntity(
 
     val questionnaireId: Long,
 
-    /**
-     * اگر null باشد یعنی نمره کل پرسشنامه.
-     * در غیر این صورت نمره همان خرده‌مقیاس است.
-     */
-    val subscaleId: Long? = null,
+    val subscaleId: Long?,
 
     val score: Double
 )
