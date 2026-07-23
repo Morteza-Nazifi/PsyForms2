@@ -1,15 +1,9 @@
 package ir.psyforms.app.database.entity
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "sessions",
-    indices = [
-        Index(value = ["status"])
-    ]
-)
+@Entity(tableName = "sessions")
 data class SessionEntity(
 
     @PrimaryKey(autoGenerate = true)
@@ -19,16 +13,5 @@ data class SessionEntity(
 
     val finishDateTime: Long? = null,
 
-    /**
-     * 0 = Draft
-     * 1 = Completed
-     */
-    val status: Int = STATUS_DRAFT
-
-) {
-
-    companion object {
-        const val STATUS_DRAFT = 0
-        const val STATUS_COMPLETED = 1
-    }
-}
+    val status: Int
+)
