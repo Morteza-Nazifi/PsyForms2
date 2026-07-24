@@ -1,18 +1,24 @@
 package ir.psyforms.app.di
 
 import android.content.Context
-
 import androidx.room.Room
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-
 import ir.psyforms.app.data.local.PsyFormsDatabase
-import ir.psyforms.app.data.local.dao.*
-
+import ir.psyforms.app.data.local.dao.DemographicDao
+import ir.psyforms.app.data.local.dao.DomainDao
+import ir.psyforms.app.data.local.dao.OptionTemplateDao
+import ir.psyforms.app.data.local.dao.OptionTemplateItemDao
+import ir.psyforms.app.data.local.dao.QuestionDao
+import ir.psyforms.app.data.local.dao.QuestionnaireDao
+import ir.psyforms.app.data.local.dao.ResponseDao
+import ir.psyforms.app.data.local.dao.ScoreDao
+import ir.psyforms.app.data.local.dao.ScoringRuleDao
+import ir.psyforms.app.data.local.dao.SessionDao
+import ir.psyforms.app.data.local.dao.SubscaleDao
 import javax.inject.Singleton
 
 @Module
@@ -22,80 +28,61 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(
-        @ApplicationContext context: Context
-    ): PsyFormsDatabase {
-
-        return Room.databaseBuilder(
+        @ApplicationContext context: Context,
+    ): PsyFormsDatabase =
+        Room.databaseBuilder(
             context,
             PsyFormsDatabase::class.java,
-            "psyforms.db"
+            "psyforms.db",
         )
             .fallbackToDestructiveMigration()
             .build()
-    }
 
-    // ---------- Repository Data ----------
-
-    @Provides
-    fun provideDomainDao(
-        database: PsyFormsDatabase
-    ): DomainDao = database.domainDao()
+    // Repository Data
 
     @Provides
-    fun provideQuestionnaireDao(
-        database: PsyFormsDatabase
-    ): QuestionnaireDao = database.questionnaireDao()
+    fun provideDomainDao(database: PsyFormsDatabase): DomainDao =
+        database.domainDao()
 
     @Provides
-    fun provideSubscaleDao(
-        database: PsyFormsDatabase
-    ): SubscaleDao = database.subscaleDao()
+    fun provideQuestionnaireDao(database: PsyFormsDatabase): QuestionnaireDao =
+        database.questionnaireDao()
 
     @Provides
-    fun provideQuestionDao(
-        database: PsyFormsDatabase
-    ): QuestionDao = database.questionDao()
+    fun provideSubscaleDao(database: PsyFormsDatabase): SubscaleDao =
+        database.subscaleDao()
 
     @Provides
-    fun provideOptionTemplateDao(
-        database: PsyFormsDatabase
-    ): OptionTemplateDao = database.optionTemplateDao()
+    fun provideQuestionDao(database: PsyFormsDatabase): QuestionDao =
+        database.questionDao()
 
     @Provides
-    fun provideOptionTemplateItemDao(
-        database: PsyFormsDatabase
-    ): OptionTemplateItemDao =
+    fun provideOptionTemplateDao(database: PsyFormsDatabase): OptionTemplateDao =
+        database.optionTemplateDao()
+
+    @Provides
+    fun provideOptionTemplateItemDao(database: PsyFormsDatabase): OptionTemplateItemDao =
         database.optionTemplateItemDao()
 
     @Provides
-    fun provideScoringRuleDao(
-        database: PsyFormsDatabase
-    ): ScoringRuleDao =
+    fun provideScoringRuleDao(database: PsyFormsDatabase): ScoringRuleDao =
         database.scoringRuleDao()
 
-    // ---------- User Data ----------
+    // User Data
 
     @Provides
-    fun provideSessionDao(
-        database: PsyFormsDatabase
-    ): SessionDao =
+    fun provideSessionDao(database: PsyFormsDatabase): SessionDao =
         database.sessionDao()
 
     @Provides
-    fun provideDemographicDao(
-        database: PsyFormsDatabase
-    ): DemographicDao =
+    fun provideDemographicDao(database: PsyFormsDatabase): DemographicDao =
         database.demographicDao()
 
     @Provides
-    fun provideResponseDao(
-        database: PsyFormsDatabase
-    ): ResponseDao =
+    fun provideResponseDao(database: PsyFormsDatabase): ResponseDao =
         database.responseDao()
 
     @Provides
-    fun provideScoreDao(
-        database: PsyFormsDatabase
-    ): ScoreDao =
+    fun provideScoreDao(database: PsyFormsDatabase): ScoreDao =
         database.scoreDao()
 }
